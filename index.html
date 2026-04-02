@@ -26,10 +26,17 @@
       --shadow:0 15px 45px rgba(0,0,0,0.35);
     }
 
+    html, body{
+      width:100%;
+      min-height:100%;
+      overflow-x:hidden;
+    }
+
     body{
       font-family:"Poppins",sans-serif;
       min-height:100vh;
-      overflow:hidden;
+      overflow-x:hidden;
+      overflow-y:auto;
       color:white;
       background:
         radial-gradient(circle at top, #32101d 0%, #12040c 30%, #080208 70%, #030103 100%);
@@ -73,12 +80,13 @@
     }
 
     .screen{
-      position:absolute;
+      position:fixed;
       inset:0;
       display:none;
-      align-items:center;
+      align-items:flex-start;
       justify-content:center;
-      padding:18px;
+      padding:18px 18px 40px;
+      overflow-y:auto;
       z-index:2;
     }
 
@@ -88,6 +96,7 @@
 
     .panel{
       width:min(94vw,430px);
+      margin:20px auto;
       background:var(--card);
       border:1px solid var(--border);
       backdrop-filter:blur(14px);
@@ -140,7 +149,6 @@
       box-shadow:none;
     }
 
-    /* intro spinning heart */
     .heart-intro-wrap{
       display:flex;
       flex-direction:column;
@@ -201,7 +209,6 @@
       line-height:1.8;
     }
 
-    /* envelope */
     .envelope-wrap{
       display:flex;
       flex-direction:column;
@@ -283,7 +290,6 @@
       white-space:pre-wrap;
     }
 
-    /* memories */
     .memory-grid{
       margin-top:18px;
       display:grid;
@@ -319,7 +325,6 @@
       background:linear-gradient(135deg, rgba(255,79,135,.22), rgba(255,255,255,.06));
     }
 
-    /* gift */
     .gift-box{
       width:120px;
       height:120px;
@@ -436,7 +441,6 @@
       margin-top:12px;
     }
 
-    /* forever section */
     .forever-box{
       margin-top:18px;
       padding:18px;
@@ -519,6 +523,7 @@
       .final-name{font-size:44px;}
       .forever-question{font-size:34px;}
       .intro-glow-text{font-size:40px;}
+      .panel{margin:10px auto;}
     }
   </style>
 </head>
@@ -568,7 +573,7 @@
   <section class="screen" id="s4">
     <div class="panel">
       <div class="title-script">Moments I Treasure</div>
-      <div class="sub">Replace these with your real photos</div>
+      <div class="sub">A few beautiful memories 💖</div>
 
       <div class="memory-grid">
         <div class="memory"><img src="her1.jpeg" alt=""></div>
@@ -625,18 +630,19 @@
 
   <script>
     async function startMusic() {
-  const music = document.getElementById('music');
-  if (!music) return; 
-  try {
+      const music = document.getElementById('music');
+      if (!music) return;
+      try {
         music.load();
-    music.volume = 1.0;
-    await music.play();
-    console.log("Music started");
-  } catch (err) {
-    console.log("Audio error:", err);
-    alert("Tap once more to start the music 🎵");
-}
-}
+        music.volume = 1.0;
+        await music.play();
+        console.log("Music started");
+      } catch (err) {
+        console.log("Audio error:", err);
+        alert("Tap once more to start the music 🎵");
+      }
+    }
+
     const messageText = `Happy Birthday to the most beautiful girl in my world ❤️
 I don’t think you even realize how special you are… not just today, but every single day. You make everything feel lighter, happier, and honestly… a lot more meaningful for me.
 I’m really lucky to have you. Like really lucky. And today, I just want you to feel all the love you deserve (starting with mine, obviously 😌).
@@ -644,51 +650,43 @@ I hope this year brings you everything you dream about… and I’ll make sure I
 Now hurry… it’s your birthday… where’s my first hug? 😏❤️`;
 
     const noPrompts = [
-"Are you sure? Because my heart already chose you the moment it met you. 🥺",
-"Think again, pretty girl... some connections are too rare to let go. 💫",
-"What if I promise to keep making you smile every single day? 🌷",
-"Last chance to make me the luckiest person alive... will you? 💖",
-
-"Don't say no so fast... my heart didn’t even get time to impress you properly 😏",
-"Are you testing me? Because I’m not giving up that easily on you 💘",
-"You sure? Because I already imagined a whole future with you 🥺",
-"Try again… maybe your heart clicked the wrong button 😉",
-
-"Okay fine… but what if I said you look cutest when you say yes? 😌",
-"You can say no… but my heart is still saying yes for both of us 💞",
-"Not convinced yet? Let me try again… will you be mine? 💖",
-"I think your heart said yes but your fingers pressed no 😏",
-
-"You’re making this harder… but I like challenges, especially when it's you 💘",
-"Still no? Wow… you really want me to fall harder for you huh 🥺",
-"I’ll keep asking… because you're worth every try 💫",
-"Even your no feels cute… but I’m still waiting for that yes 😌",
-
-"What if I promise to annoy you forever in the cutest way possible? 😏",
-"Okay but imagine us together… now press yes 😌",
-"I think you're secretly smiling while pressing no 😏",
-"You can’t escape… my heart already chose you 💖",
-
-"Let me ask again properly… will you be mine? 🥺",
-"Still thinking? I’ll wait… but not forever 😏",
-"Even destiny is waiting for your yes right now 💫",
-"You’re dangerously close to becoming my forever 😌",
-
-"I’m not giving up… not when it comes to you 💘",
-"One day you’ll say yes… why not today? 😉",
-"You’re worth every retry button I have 💖",
-"I’ll keep asking until your heart matches mine 💞",
-
-"Don’t worry… I’m patient when it comes to love 😌",
-"Say yes and make this the best moment ever 💫",
-"I think you like the attention… admit it 😏",
-"You’re enjoying this, aren’t you? 😌",
-
-"Alright… final try (not really)… will you be mine? 💖",
-"I’ll keep coming back… because you’re worth it 💘",
-"Your no just made me like you even more 🥺",
-"You’re really making me fall harder every second 💞"
-];
+      "Are you sure? Because my heart already chose you the moment it met you. 🥺",
+      "Think again, pretty girl... some connections are too rare to let go. 💫",
+      "What if I promise to keep making you smile every single day? 🌷",
+      "Last chance to make me the luckiest person alive... will you? 💖",
+      "Don't say no so fast... my heart didn’t even get time to impress you properly 😏",
+      "Are you testing me? Because I’m not giving up that easily on you 💘",
+      "You sure? Because I already imagined a whole future with you 🥺",
+      "Try again… maybe your heart clicked the wrong button 😉",
+      "Okay fine… but what if I said you look cutest when you say yes? 😌",
+      "You can say no… but my heart is still saying yes for both of us 💞",
+      "Not convinced yet? Let me try again… will you be mine? 💖",
+      "I think your heart said yes but your fingers pressed no 😏",
+      "You’re making this harder… but I like challenges, especially when it's you 💘",
+      "Still no? Wow… you really want me to fall harder for you huh 🥺",
+      "I’ll keep asking… because you're worth every try 💫",
+      "Even your no feels cute… but I’m still waiting for that yes 😌",
+      "What if I promise to annoy you forever in the cutest way possible? 😏",
+      "Okay but imagine us together… now press yes 😌",
+      "I think you're secretly smiling while pressing no 😏",
+      "You can’t escape… my heart already chose you 💖",
+      "Let me ask again properly… will you be mine? 🥺",
+      "Still thinking? I’ll wait… but not forever 😏",
+      "Even destiny is waiting for your yes right now 💫",
+      "You’re dangerously close to becoming my forever 😌",
+      "I’m not giving up… not when it comes to you 💘",
+      "One day you’ll say yes… why not today? 😉",
+      "You’re worth every retry button I have 💖",
+      "I’ll keep asking until your heart matches mine 💞",
+      "Don’t worry… I’m patient when it comes to love 😌",
+      "Say yes and make this the best moment ever 💫",
+      "I think you like the attention… admit it 😏",
+      "You’re enjoying this, aren’t you? 😌",
+      "Alright… final try (not really)… will you be mine? 💖",
+      "I’ll keep coming back… because you’re worth it 💘",
+      "Your no just made me like you even more 🥺",
+      "You’re really making me fall harder every second 💞"
+    ];
 
     const screens = [
       document.getElementById('s1'),
@@ -706,6 +704,7 @@ Now hurry… it’s your birthday… where’s my first hug? 😏❤️`;
       document.getElementById('s' + n).classList.add('active');
 
       if(n === 3) startTyping();
+      window.scrollTo(0, 0);
     }
 
     function restart(){
@@ -752,7 +751,7 @@ Now hurry… it’s your birthday… where’s my first hug? 😏❤️`;
     function chooseYes(){
       const finalBox = document.getElementById("finalFlirty");
       finalBox.style.display = "block";
-finalBox.innerHTML = `So this is real now…
+      finalBox.innerHTML = `So this is real now…
 
 You and me.
 
@@ -777,7 +776,7 @@ won’t dare to stay. 💖♾️`;
       document.getElementById("choiceRow").innerHTML =
         '<button class="choice-btn yes-btn" disabled style="opacity:.95;cursor:default;">She said Yes 💘</button>';
     }
-    
+
     function createStars(){
       const box = document.getElementById('stars');
       for(let i = 0; i < 65; i++){
